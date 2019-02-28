@@ -231,7 +231,7 @@ public class FileIO extends JPanel {
       * @param result
       * @return
     */
-    public File saveSolution(List<? extends ExpectedOutputFormat> result) {
+    public File saveSolution(List<? extends ExpectedOutputFormat> slides) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         try {
@@ -273,7 +273,8 @@ public class FileIO extends JPanel {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File solutionFile = fileChooser.getSelectedFile();
             StringBuilder sb = new StringBuilder();
-            result.forEach((solution) -> {
+            sb.append(slides.size()).append(FileIO.LINE_SEPARATOR);
+            slides.forEach((solution) -> {
                 sb.append(solution.toExpectedOutputFormat()).append(FileIO.LINE_SEPARATOR);
             });
             writeSolution(solutionFile, sb.toString());

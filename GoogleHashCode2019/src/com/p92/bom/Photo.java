@@ -32,6 +32,24 @@ public class Photo {
     public String toString() {
         return "Photo{" + "id=" + id + ", orientation=" + orientation + ", tags=" + Arrays.toString(tags) + '}';
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
     
+    public boolean isHorizontal() {
+        return (orientation != null && Orientation.H.equals(orientation));
+    }
     
+    public boolean isVertical() {
+        return (orientation != null && Orientation.V.equals(orientation));
+    }
 }
