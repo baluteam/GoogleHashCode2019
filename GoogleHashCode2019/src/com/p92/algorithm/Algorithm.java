@@ -32,7 +32,7 @@ public final class Algorithm {
      */
     public static SlideShow calculate(List<Photo> photos) {
         SlideShow slideShow = new SlideShow();
-        testCalculate(slideShow, photos);
+        calculateWithScoreMatrix(slideShow, photos);
         return slideShow;
     }
     
@@ -42,6 +42,13 @@ public final class Algorithm {
      * @param photos 
      */
     private static void testCalculate(SlideShow slideShow, List<Photo> photos) {
+        Slide s1 = new Slide(photos.get(0));
+        Slide s2 = new Slide(photos.get(1), photos.get(2));
+        Slide s3 = new Slide(photos.get(3));
+        slideShow.addSlides(s1,s2,s3);
+    }
+    
+    private static void calculateWithScoreMatrix(SlideShow slideShow, List<Photo> photos) {
         Slide s1 = new Slide(photos.get(0));
         Slide s2 = new Slide(photos.get(1), photos.get(2));
         Slide s3 = new Slide(photos.get(3));

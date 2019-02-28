@@ -5,6 +5,12 @@
  */
 package com.p92.bom;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  *
  * @author Balu_ADMIN
@@ -12,6 +18,7 @@ package com.p92.bom;
 public class Slide implements ExpectedOutputFormat {
 
     private final Photo[] photosInSlide;
+    private final Set<String> tags = new HashSet<>();
     
     public Slide(Photo photo) {
         if(photo == null || !photo.isHorizontal()) {
@@ -19,6 +26,7 @@ public class Slide implements ExpectedOutputFormat {
         }
         photosInSlide = new Photo[1];
         photosInSlide[0] = photo;
+        tags.addAll(Arrays.asList(photo.getTags()));
     }
     
     public Slide(Photo photo1, Photo photo2) {
@@ -28,6 +36,8 @@ public class Slide implements ExpectedOutputFormat {
         photosInSlide = new Photo[2];
         photosInSlide[0] = photo1;
         photosInSlide[1] = photo2;
+        tags.addAll(Arrays.asList(photo1.getTags()));
+        tags.addAll(Arrays.asList(photo2.getTags()));
     }
     
     @Override
@@ -43,5 +53,9 @@ public class Slide implements ExpectedOutputFormat {
     
     public int getNumberOfPhotosInSlide() {
         return photosInSlide.length;
+    }
+
+    public Set<String> getTags() {
+        return tags;
     }
 }

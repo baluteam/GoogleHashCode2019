@@ -7,7 +7,9 @@ package com.p92.bom;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -30,5 +32,48 @@ public class SlideShow {
 
     public List<Slide> getSlides() {
         return slides;
+    }
+    
+    /**
+     * Returns the score for the transition between two given slides
+     * 
+     * @param s1
+     * @param s2
+     * @return 
+     */
+    public static int calculateTransitionScore(Slide s1, Slide s2) {
+        //intersection = common values
+        Set<String> intersection = new HashSet<>(s1.getTags()); // use the copy constructor
+        intersection.retainAll(s2.getTags());
+        int intersectionValue = intersection.size();
+        //only in s1
+        Set<String> onlyInS1 = new HashSet<>(s1.getTags()); // use the copy constructor
+        onlyInS1.removeAll(s2.getTags());
+        int onlyInS1Value = onlyInS1.size();
+        //only in s2
+        Set<String> onlyInS2 = new HashSet<>(s2.getTags()); // use the copy constructor
+        onlyInS2.removeAll(s1.getTags());
+        int onlyInS2Value = onlyInS2.size();
+        return Math.min(Math.min(onlyInS1Value, onlyInS2Value), intersectionValue);
+    }
+    
+    public static List<Photo> getAllHorizontalPhotos(final List<Photo> allOfTheOriginalPhotos) {
+        List<Photo> onlyHorizontalPhotos = new ArrayList<>();
+        for(Photo photo : allOfTheOriginalPhotos) {
+            if(photo.isHorizontal()) {
+                onlyHorizontalPhotos.add(photo);
+            }
+        }
+        return onlyHorizontalPhotos;
+    }
+    
+    public static List<Photo> getAllVerticalPhotos(final List<Photo> allOfTheOriginalPhotos) {
+        List<Photo> onlyVerticalPhotos = new ArrayList<>();
+        for(Photo photo : allOfTheOriginalPhotos) {
+            if(photo.isVertical()) {
+                onlyVerticalPhotos.add(photo);
+            }
+        }
+        return onlyVerticalPhotos;
     }
 }
