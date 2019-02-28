@@ -9,11 +9,8 @@ public interface ExpectedOutputFormat {
     /**
      * The data separator between the fields.
      */
-    public static final String DATA_SEPARATOR = "\t";
-    /**
-     * Maximum of 5 digits is allowed in the fractional part of the solution. The rest will be trimmed if there is any.
-     */
-    public static final int MAX_FRACTIONAL_PART = 5;
+    public static final String DATA_SEPARATOR = " ";
+    
     /**
      * This method returns the string content in the expected output format, which should be writen into the solution output file.
      * 

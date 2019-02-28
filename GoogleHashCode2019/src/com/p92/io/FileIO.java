@@ -28,7 +28,7 @@ public class FileIO extends JPanel {
     /**
      * Input file extension
      */
-    public static final String INPUT_EXTENSION = ".in";
+    public static final String INPUT_EXTENSION = ".txt";
     /**
      * Separator character of new input lines.
      */
@@ -40,7 +40,7 @@ public class FileIO extends JPanel {
     /**
      * Name of this currently running project
      */
-    private static final String PROJECT_ROOT_NAME = "CookieClicker";
+    private static final String PROJECT_ROOT_NAME = "GoogleHashCode2019";
     /**
      * Folder name where we have the input data
      */
