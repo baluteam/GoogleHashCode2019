@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -56,16 +57,18 @@ public final class Algorithm {
         List<Slide> horizontalSlides = SlideShow.getAllHorizontalPhotosAsSlide(photos);
         int numberOfSlides = verticalSlides.size() + horizontalSlides.size();
         List<Slide> allSlides = new ArrayList<>(verticalSlides); //vertical + horizontal
-        allSlides.addAll(horizontalSlides); 
-        int[][] slidesScoreMatrix = new int[numberOfSlides][numberOfSlides]; //vertical + horizontal
+        allSlides.addAll(horizontalSlides);
+        List<List<Integer>> slidesScoreMatrix = new LinkedList<>(); //vertical + horizontal
+//        int[][] slidesScoreMatrix = new int[numberOfSlides][numberOfSlides]; 
         //calculate the scores for the whole matrix even if there will be duplicates
         for(int columnIndex=0; columnIndex<numberOfSlides; columnIndex++) {
+            slidesScoreMatrix.add(new LinkedList<>());
             for(int rowIndex=0; rowIndex<numberOfSlides; rowIndex++) {
-                slidesScoreMatrix[columnIndex][rowIndex] = SlideShow.calculateTransitionScore(allSlides.get(rowIndex), allSlides.get(columnIndex));
+                slidesScoreMatrix.get(columnIndex).add(rowIndex, SlideShow.calculateTransitionScore(allSlides.get(rowIndex), allSlides.get(columnIndex)));
             }
         }
         //printScoreMatrix(allSlides, slidesScoreMatrix);
-        //get the max score from every row and remove that index
+        //get the max score from every row and remove that index       
         Set<Integer> alreadyUsedSlideIndices = new HashSet<>();
         int maxColumnIndex = 0;
         int maxRowIndex = 0;
@@ -73,7 +76,7 @@ public final class Algorithm {
         for(int columnIndex=1; columnIndex<numberOfSlides; columnIndex++) {
             for(int rowIndex=0; rowIndex<columnIndex; rowIndex++) {
                 //slidesScoreMatrix[rowIndex][columnIndex] = 99; //you can use a custom value and then pretty print to see if we are really working in the upper triangle
-                if(slidesScoreMatrix[maxRowIndex][maxColumnIndex] < slidesScoreMatrix[rowIndex][columnIndex]) {
+                if(slidesScoreMatrix.get(maxRowIndex).get(maxColumnIndex) < slidesScoreMatrix.get(rowIndex).get(columnIndex)) {
                     maxRowIndex = rowIndex;
                     maxColumnIndex = columnIndex;
                 }
@@ -95,7 +98,7 @@ public final class Algorithm {
             for(int columnIndex=1; columnIndex<numberOfSlides; columnIndex++) {
                 if(!alreadyUsedSlideIndices.contains(columnIndex)) {
                     hasMorePhotosForTransition = true;
-                    if(slidesScoreMatrix[maxRowIndex][maxColumnIndex] <= slidesScoreMatrix[transitionFromSlideIndex][columnIndex]) {
+                    if(slidesScoreMatrix.get(maxRowIndex).get(maxColumnIndex) <= slidesScoreMatrix.get(transitionFromSlideIndex).get(columnIndex)) {
                         maxRowIndex = transitionFromSlideIndex;
                         maxColumnIndex = columnIndex;
                     }
@@ -106,6 +109,25 @@ public final class Algorithm {
                 alreadyUsedSlideIndices.add(maxColumnIndex);
             }
         }
+    }
+    
+    private static void printScoreMatrix(List<Slide> allSlides, List<List<Integer>> slidesScoreMatrix) {
+        final String TAB = "\t\t";
+        System.out.print(TAB);
+        for(int columnIndex=0; columnIndex<slidesScoreMatrix.size(); columnIndex++) {
+            if(columnIndex == 0) {
+                for(int rowIndex=0; rowIndex<slidesScoreMatrix.get(columnIndex).size(); rowIndex++) {
+                    System.out.print(allSlides.get(rowIndex).getPretyId() + TAB);
+                }
+                System.out.println();
+            }
+            System.out.print(allSlides.get(columnIndex).getPretyId() + TAB);
+            for(int rowIndex=0; rowIndex<slidesScoreMatrix.get(columnIndex).size(); rowIndex++) {
+                System.out.print(slidesScoreMatrix.get(columnIndex).get(rowIndex) + TAB);
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
     
     private static void printScoreMatrix(List<Slide> allSlides, int[][] slidesScoreMatrix) {
