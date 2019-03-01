@@ -76,4 +76,14 @@ public class SlideShow {
         }
         return onlyVerticalPhotos;
     }
+    
+    public static List<Slide> getAllHorizontalPhotosAsSlide(final List<Photo> allOfTheOriginalPhotos) {
+        List<Slide> onlyHorizontalPhotosSlide = new ArrayList<>();
+        for(Photo photo : allOfTheOriginalPhotos) {
+            if(photo.isHorizontal()) {
+                onlyHorizontalPhotosSlide.add(new Slide(photo));
+            }
+        }
+        return onlyHorizontalPhotosSlide;
+    }
 }

@@ -5,10 +5,8 @@
  */
 package com.p92.bom;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -57,5 +55,15 @@ public class Slide implements ExpectedOutputFormat {
 
     public Set<String> getTags() {
         return tags;
+    }
+    
+    public String getPretyId() {
+        if(photosInSlide.length == 1) {
+            return "ID(" + photosInSlide[0].getId() + ")";
+        }
+        else if(photosInSlide.length == 2) {
+            return "ID(" + photosInSlide[0].getId() + "_" + photosInSlide[1].getId() + ")";
+        }
+        throw new IllegalArgumentException("Wrong number of photos in a slide: " + photosInSlide.length);
     }
 }
