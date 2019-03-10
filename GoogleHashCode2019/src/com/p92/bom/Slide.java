@@ -5,7 +5,6 @@
  */
 package com.p92.bom;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,6 +56,7 @@ public class Slide implements ExpectedOutputFormat, WithTags {
         return tags;
     }
     
+    @Override
     public String getPretyId() {
         if(photosInSlide.length == 1) {
             return "ID(" + photosInSlide[0].getId() + ")";

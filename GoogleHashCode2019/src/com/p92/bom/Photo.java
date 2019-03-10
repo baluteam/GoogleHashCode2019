@@ -48,6 +48,7 @@ public class Photo implements WithTags {
         return orientation;
     }
 
+    @Override
     public Set<String> getTags() {
         return tags;
     }
