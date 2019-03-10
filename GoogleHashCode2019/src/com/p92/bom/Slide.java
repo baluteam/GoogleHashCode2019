@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author Balu_ADMIN
  */
-public class Slide implements ExpectedOutputFormat {
+public class Slide implements ExpectedOutputFormat, WithTags {
 
     private final Photo[] photosInSlide;
     private final Set<String> tags = new HashSet<>();
@@ -24,7 +24,7 @@ public class Slide implements ExpectedOutputFormat {
         }
         photosInSlide = new Photo[1];
         photosInSlide[0] = photo;
-        tags.addAll(Arrays.asList(photo.getTags()));
+        tags.addAll(photo.getTags());
     }
     
     public Slide(Photo photo1, Photo photo2) {
@@ -34,8 +34,8 @@ public class Slide implements ExpectedOutputFormat {
         photosInSlide = new Photo[2];
         photosInSlide[0] = photo1;
         photosInSlide[1] = photo2;
-        tags.addAll(Arrays.asList(photo1.getTags()));
-        tags.addAll(Arrays.asList(photo2.getTags()));
+        tags.addAll(photo1.getTags());
+        tags.addAll(photo2.getTags());
     }
     
     @Override
@@ -66,4 +66,17 @@ public class Slide implements ExpectedOutputFormat {
         }
         throw new IllegalArgumentException("Wrong number of photos in a slide: " + photosInSlide.length);
     }
+
+    @Override
+    public String toString() {
+         if(photosInSlide.length == 1) {
+            return String.valueOf(photosInSlide[0].getId());
+        }
+        else if(photosInSlide.length == 2) {
+            return photosInSlide[0].getId() + "_" + photosInSlide[1].getId();
+        }
+         return "UNKNOWN_PHOTO_ID";
+    }
+    
+    
 }

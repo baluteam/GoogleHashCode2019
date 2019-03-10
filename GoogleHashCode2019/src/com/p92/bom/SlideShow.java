@@ -41,7 +41,7 @@ public class SlideShow {
      * @param s2
      * @return 
      */
-    public static int calculateTransitionScore(Slide s1, Slide s2) {
+    public static int calculateTransitionScore(WithTags s1, WithTags s2) {
         //intersection = common values
         Set<String> intersection = new HashSet<>(s1.getTags()); // use the copy constructor
         intersection.retainAll(s2.getTags());
@@ -85,5 +85,10 @@ public class SlideShow {
             }
         }
         return onlyHorizontalPhotosSlide;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(slides.toArray());
     }
 }

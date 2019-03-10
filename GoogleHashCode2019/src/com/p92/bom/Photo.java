@@ -6,31 +6,38 @@
 package com.p92.bom;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author Balu_ADMIN
  */
-public class Photo {
+public class Photo implements WithTags {
     private int id;
     private Orientation orientation;
-    private String[] tags;
+    private Set<String> tags;
 
     public Photo(int id, Orientation orientation, String[] tags) {
         this.id = id;
         this.orientation = orientation;
-        this.tags = tags;
+        setTags(tags);
     }
     
     public Photo(int id, String orientation, String[] tags) {
         this.id = id;
         this.orientation = Orientation.getOrientation(orientation);
-        this.tags = tags;
+        setTags(tags);
     }
 
     @Override
     public String toString() {
-        return "Photo{" + "id=" + id + ", orientation=" + orientation + ", tags=" + Arrays.toString(tags) + '}';
+        return "Photo{" + "id=" + id + ", orientation=" + orientation + ", tags=" + Arrays.toString(tags.toArray()) + '}';
+    }
+    
+    @Override
+    public String getPretyId() {
+        return "ID(" + id + ")";
     }
 
     public int getId() {
@@ -41,8 +48,12 @@ public class Photo {
         return orientation;
     }
 
-    public String[] getTags() {
+    public Set<String> getTags() {
         return tags;
+    }
+    
+    private void setTags(String[] tags) {
+        this.tags = new HashSet<>(Arrays.asList(tags));
     }
     
     public boolean isHorizontal() {
